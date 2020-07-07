@@ -11,7 +11,7 @@ import { groupingChemicalTypebyName } from '../utils'
 
 const GET_CHEMICAL_TYPES1 = gql`
   {
-    listChemical11 {
+    listChemical1 {
       chemicaltype1
     }
   }
@@ -51,7 +51,7 @@ export default function ChemicalType({ typeC, name }) {
         </TableHead>
         <TableBody>
           {groupingChemicalTypebyName(
-            chemicalType === 1 ? data.listChemical11 : data.listChemical2,
+            chemicalType === 1 ? data.listChemical1 : data.listChemical2,
             name
           ).map((row, index) => (
             <TableRow key={index}>

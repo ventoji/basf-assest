@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
-import UserList from './components/UserList'
+// import UserList from './components/UserList'
 
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
@@ -30,6 +30,7 @@ import {
   People as PeopleIcon,
 } from '@material-ui/icons'
 import Dashboard from './components/Dashboard'
+import ChemicalTypeList from './components/ChemicalTypeList'
 
 function Copyright() {
   return (
@@ -219,7 +220,7 @@ export default function App() {
           <Container maxWidth="lg" className={classes.container}>
             <Switch>
               <Route exact path="/" component={Dashboard} />
-              <Route exact path="/users" component={UserList} />
+              <Route exact path="/users" component={ChemicalTypeList} />
             </Switch>
 
             <Box pt={4}>

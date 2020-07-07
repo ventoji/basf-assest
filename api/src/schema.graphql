@@ -4,7 +4,7 @@ type Chemcial1 {
   chemicaltype1: String
 }
 
-type Chemical2 {
+type Chemcial2 {
   patentno: ID!
   patenttile: String
   chemicaltype2: String
@@ -26,8 +26,9 @@ type Mutation {
 
 type Query {
   totalChemical11: Int! @cypher(statement: "MATCH (e:Chemcial1) RETURN COUNT(e)")
-  totalChemical22: Int! @cypher(statement: "MATCH (f:Chemical2) RETURN COUNT(f)")
-  listChemical2: [Chemical2]! @cypher(statement: "MATCH (f:Chemcial2) RETURN (f)")
+  totalChemical22: Int! @cypher(statement: "MATCH (f:Chemcial2) RETURN COUNT(f)")
+  listChemical2: [Chemcial2]! @cypher(statement: "MATCH (f:Chemcial2) RETURN (f) ORDER BY f.chemicaltype2")
+  listChemical1: [Chemcial1]! @cypher(statement: "MATCH (e:Chemcial1) RETURN (e) ORDER BY e.chemicaltype1")
   listChemical11(patentno: ID, patenttile: String, chemicaltype1: String): [Chemcial1]
-  listChemical22(patentno: ID, patenttile: String, chemicaltype2: String): [Chemical2]
+  listChemical22(patentno: ID, patenttile: String, chemicaltype2: String): [Chemcial2]
   }
