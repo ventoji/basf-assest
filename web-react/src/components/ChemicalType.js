@@ -19,7 +19,7 @@ const GET_CHEMICAL_TYPES1 = gql`
 
 const GET_CHEMICAL_TYPES2 = gql`
   {
-    listChemical22 {
+    listChemical2 {
       chemicaltype2
     }
   }
@@ -30,7 +30,7 @@ export default function ChemicalType({ typeC, name }) {
 
   useEffect(() => {
     setChemicalType(typeC)
-  }, [])
+  }, [typeC])
 
   const { loading, error, data } = useQuery(
     chemicalType === 1 ? GET_CHEMICAL_TYPES1 : GET_CHEMICAL_TYPES2
@@ -50,14 +50,15 @@ export default function ChemicalType({ typeC, name }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {groupingChemicalTypebyName(data.listChemical11, name).map(
-            (row, index) => (
-              <TableRow key={index}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.count}</TableCell>
-              </TableRow>
-            )
-          )}
+          {groupingChemicalTypebyName(
+            chemicalType === 1 ? data.listChemical11 : data.listChemical2,
+            name
+          ).map((row, index) => (
+            <TableRow key={index}>
+              <TableCell>{row.name}</TableCell>
+              <TableCell>{row.count}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </React.Fragment>

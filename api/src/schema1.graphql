@@ -1,10 +1,3 @@
-type Chemical {
-  patentno: ID!
-  patenttitle: String!
-  chemicaltype1: String!
-}
-
-
 type User {
   userId: ID!
   name: String
