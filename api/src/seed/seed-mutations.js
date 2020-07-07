@@ -1,95 +1,54 @@
 const fetch = require('node-fetch')
 const parse = require('csv-parse/lib/sync')
 const gql = require('graphql-tag')
+import { renameKeys } from './utils'
 
 export const getSeedMutations = async () => {
   const res = await fetch(
-    'https://cdn.neo4jlabs.com/data/grandstack_businesses.csv'
+    'https://raw.githubusercontent.com/ventoji/chemicals/master/chemical_type_1.csv'
   )
   const body = await res.text()
-  const records = parse(body, { columns: true })
+  /*    console.log(parse(body, { 
+     columns: true,
+     delimiter: ';' 
+    })) */
+  console.log('body')
+  console.log(body)
+  console.log('--------------')
+  const records = parse(body, {
+    columns: true,
+    delimiter: ';',
+  })
+  console.log('records')
+  //console.log(records);
+  console.log('--------------')
   const mutations = generateMutations(records)
-
+  //const mutations = [];
+  //console.log(mutations);
+  console.log('mutations')
+  // console.log(mutations);
+  console.log('--------------')
   return mutations
 }
 
 const generateMutations = (records) => {
+  //return records
   return records.map((rec) => {
+    //  console.log('item',rec);
     Object.keys(rec).map((k) => {
-      if (k === 'latitude' || k === 'longitude' || k === 'reviewStars') {
-        rec[k] = parseFloat(rec[k])
-      } else if (k === 'reviewDate') {
-        const dateParts = rec[k].split('-')
-        rec['year'] = parseInt(dateParts[0])
-        rec['month'] = parseInt(dateParts[1])
-        rec['day'] = parseInt(dateParts[2])
-      } else if (k === 'categories') {
-        rec[k] = rec[k].split(',')
-      }
+      renameKeys(rec, k)
     })
 
     return {
       mutation: gql`
-        mutation mergeReviews(
-          $userId: ID!
-          $userName: String
-          $businessId: ID!
-          $businessName: String
-          $businessCity: String
-          $businessState: String
-          $businessAddress: String
-          $latitude: Float
-          $longitude: Float
-          $reviewId: ID!
-          $reviewText: String
-          $year: Int
-          $month: Int
-          $day: Int
-          $reviewStars: Float
-          $categories: [String!]!
+        mutation mergeChemicalType1(
+          $patentno: String!
+          $patenttitle: String
+          $chemicaltype1: String
         ) {
-          user: MergeUser(userId: $userId, name: $userName) {
-            userId
-          }
-          business: MergeBusiness(
-            businessId: $businessId
-            name: $businessName
-            address: $businessAddress
-            city: $businessCity
-            state: $businessState
-            location: { latitude: $latitude, longitude: $longitude }
-          ) {
-            businessId
-          }
-          review: MergeReview(
-            reviewId: $reviewId
-            text: $reviewText
-            date: { year: $year, month: $month, day: $day }
-            stars: $reviewStars
-          ) {
-            reviewId
-          }
-          reviewUser: MergeReviewUser(
-            from: { userId: $userId }
-            to: { reviewId: $reviewId }
-          ) {
-            from {
-              userId
-            }
-          }
-          reviewBusiness: MergeReviewBusiness(
-            from: { reviewId: $reviewId }
-            to: { businessId: $businessId }
-          ) {
-            from {
-              reviewId
-            }
-          }
-          businessCategories: mergeBusinessCategory(
-            categories: $categories
-            businessId: $businessId
-          ) {
-            businessId
+          chemical1: chemicalList1(patentno: $patentno) {
+            patentno
+            patenttitle
           }
         }
       `,

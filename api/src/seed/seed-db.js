@@ -23,6 +23,7 @@ const client = new ApolloClient({
 const runMutations = async () => {
   const mutations = await getSeedMutations()
 
+  // console.log('testing',mutations);
   return Promise.all(
     mutations.map(({ mutation, variables }) => {
       return client
@@ -31,6 +32,7 @@ const runMutations = async () => {
           variables,
         })
         .catch((e) => {
+          console.log('entra')
           throw new Error(e)
         })
     })

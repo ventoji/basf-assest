@@ -1,64 +1,32 @@
-type User {
-  userId: ID!
-  name: String
-  reviews: [Review] @relation(name: "WROTE", direction: "OUT")
-  avgStars: Float
-    @cypher(
-      statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN toFloat(avg(r.stars))"
-    )
-  numReviews: Int
-    @cypher(statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN COUNT(r)")
-  recommendations(first: Int = 3): [Business]
-    @cypher(
-      statement: "MATCH (this)-[:WROTE]->(r:Review)-[:REVIEWS]->(:Business)<-[:REVIEWS]-(:Review)<-[:WROTE]-(:User)-[:WROTE]->(:Review)-[:REVIEWS]->(rec:Business) WHERE NOT EXISTS( (this)-[:WROTE]->(:Review)-[:REVIEWS]->(rec) ) WITH rec, COUNT(*) AS num ORDER BY num DESC LIMIT $first RETURN rec"
-    )
+type Chemical11 {
+  patentno: ID!
+  patenttile: String
+  chemicaltype1: String
 }
 
-type Business {
-  businessId: ID!
-  name: String!
-  address: String
-  city: String
-  state: String
-  location: Point
-  avgStars: Float
-    @cypher(
-      statement: "MATCH (this)<-[:REVIEWS]-(r:Review) RETURN coalesce(avg(r.stars),0.0)"
-    )
-  reviews: [Review] @relation(name: "REVIEWS", direction: "IN")
-  categories: [Category] @relation(name: "IN_CATEGORY", direction: "OUT")
+type Chemical22 {
+  patentno: ID!
+  patenttile: String
+  chemicaltype2: String
 }
 
-type Review {
-  reviewId: ID!
-  stars: Float
-  text: String
-  date: Date
-  business: Business @relation(name: "REVIEWS", direction: "OUT")
-  user: User @relation(name: "WROTE", direction: "IN")
-}
-
-type Category {
-  name: ID!
-  businesses: [Business] @relation(name: "IN_CATEGORY", direction: "IN")
-}
-
-type RatingCount {
-  stars: Float!
-  count: Int!
+type Chemical {
+  patentno: ID!
+  patenttile: String
+  chemicaltype1: String
+  chemicaltype2: String
 }
 
 type Mutation {
-  mergeBusinessCategory(categories: [String!]!, businessId: ID!): Business
+  findTitle(titleSearch: String!) : [Chemical]
     @cypher(
-      statement: "MATCH (b:Business {businessId: $businessId}) UNWIND $categories AS cat MERGE (c:Category {name: cat}) MERGE (b)-[:IN_CATEGORY]->(c) RETURN b"
+      statement: "MATCH (f) WHERE f.patenttile CONTAINS  $titleSearch RETURN f "
     )
 }
 
 type Query {
-  userCount: Int! @cypher(statement: "MATCH (u:User) RETURN COUNT(u)")
-  ratingsCount: [RatingCount]
-    @cypher(
-      statement: "MATCH (r:Review) WITH r.stars AS stars, COUNT(*) AS count ORDER BY stars RETURN {stars: stars, count: count}"
-    )
-}
+  totalChemical11: Int! @cypher(statement: "MATCH (e:Chemical11) RETURN COUNT(e)")
+  totalChemical22: Int! @cypher(statement: "MATCH (f:Chemical22) RETURN COUNT(f)")
+  listChemical11(patentno: ID, patenttile: String, chemicaltype1: String): [Chemical11]
+  listChemical22(patentno: ID, patenttile: String, chemicaltype2: String): [Chemical22]
+  }

@@ -36,7 +36,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <MUILink color="inherit" href="https://grandstack.io/">
-        Your GRANDstack App Name Here
+        BASF UI coding challenge
       </MUILink>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -176,7 +176,7 @@ export default function App() {
               noWrap
               className={classes.title}
             >
-              Welcome To GRANDstack App
+              WELCOME TO OUR TOOLBOX
             </Typography>
           </Toolbar>
         </AppBar>
@@ -219,7 +219,6 @@ export default function App() {
           <Container maxWidth="lg" className={classes.container}>
             <Switch>
               <Route exact path="/" component={Dashboard} />
-              <Route exact path="/businesses" component={UserList} />
               <Route exact path="/users" component={UserList} />
             </Switch>
 
