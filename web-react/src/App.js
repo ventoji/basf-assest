@@ -30,7 +30,7 @@ import {
   People as PeopleIcon,
 } from '@material-ui/icons'
 import Dashboard from './components/Dashboard'
-import ChemicalTypeList from './components/ChemicalTypeList'
+import ChemicalSearchedContainer from './container/ChemicalSearchContainer'
 
 function Copyright() {
   return (
@@ -165,11 +165,7 @@ export default function App() {
             >
               <MenuIcon />
             </IconButton>
-            <img
-              className={classes.appBarImage}
-              src="img/grandstack.png"
-              alt="GRANDstack logo"
-            />
+
             <Typography
               component="h1"
               variant="h6"
@@ -200,16 +196,16 @@ export default function App() {
                 <ListItemIcon>
                   <DashboardIcon />
                 </ListItemIcon>
-                <ListItemText primary="Dashboard" />
+                <ListItemText primary="Documents" />
               </ListItem>
             </Link>
 
-            <Link to="/users" className={classes.navLink}>
+            <Link to="/chemicaltype" className={classes.navLink}>
               <ListItem button>
                 <ListItemIcon>
                   <PeopleIcon />
                 </ListItemIcon>
-                <ListItemText primary="Users" />
+                <ListItemText primary="Last search" />
               </ListItem>
             </Link>
           </List>
@@ -220,7 +216,11 @@ export default function App() {
           <Container maxWidth="lg" className={classes.container}>
             <Switch>
               <Route exact path="/" component={Dashboard} />
-              <Route exact path="/users" component={ChemicalTypeList} />
+              <Route
+                exact
+                path="/chemicaltype"
+                component={ChemicalSearchedContainer}
+              />
             </Switch>
 
             <Box pt={4}>

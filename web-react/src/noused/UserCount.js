@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import Title from './Title'
+import Title from '../components/Title'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 
@@ -37,7 +37,7 @@ export default function Deposits() {
         documents found
       </Typography>
       <div>
-        <Link to="/users" className={classes.navLink}>
+        <Link to="/chemicaltype" className={classes.navLink}>
           View documents
         </Link>
       </div>

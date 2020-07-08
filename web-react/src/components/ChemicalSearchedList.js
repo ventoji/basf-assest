@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { withStyles } from '@material-ui/core/styles'
@@ -13,10 +13,14 @@ import {
   TableSortLabel,
   TextField,
 } from '@material-ui/core'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf'
+import List from '@material-ui/core/List'
 // import SelectEntriesChemical from './SelectEntriesChemical';
 import Title from './Title'
+import Link from '@material-ui/core/Link'
 
 const styles = (theme) => ({
   root: {
@@ -33,10 +37,17 @@ const styles = (theme) => ({
     marginRight: theme.spacing(1),
     minWidth: 300,
   },
+  listIcons: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  icon: {
+    padding: 5,
+  },
 })
 
 const GET_CHEMICAL_TYPE = gql`
-  query usersPaginateQuery(
+  query(
     $first: Int
     $offset: Int
     $orderBy: [_Chemcial1Ordering]
@@ -50,36 +61,29 @@ const GET_CHEMICAL_TYPE = gql`
     ) {
       patentno
       patenttile
+      chemicaltype1
     }
   }
 `
-/* const GET_USER = gql`
-  query usersPaginateQuery(
-    $first: Int
-    $offset: Int
-    $orderBy: [_UserOrdering]
-    $filter: _UserFilter
-  ) {
-    User(first: $first, offset: $offset, orderBy: $orderBy, filter: $filter) {
-      id: userId
-      name
-      avgStars
-      numReviews
-    }
-  }
-` */
 
-function UserList(props) {
-  const { classes } = props
+function ChemicalSearchedList({ classes, chemicalSearch, chemicalName }) {
+  //const { classes } = props
+  //const classes = styles();
+  // const [userData, setUserData] = useState({});
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('patenttile')
   const [page] = React.useState(0)
   const [rowsPerPage] = React.useState(12)
   const [filterState, setFilterState] = React.useState({ chemicalFilter: '' })
 
+  useEffect(() => {
+    // console.log(chemicalSearch)
+    // setUserData(chemicalSearch)
+    setFilterState({ chemicalFilter: chemicalName })
+  }, [chemicalSearch])
   const getFilter = () => {
     return filterState.chemicalFilter.length > 0
-      ? { patenttile_contains: filterState.chemicalFilter }
+      ? { chemicaltype1_contains: filterState.chemicalFilter }
       : {}
   }
 
@@ -181,8 +185,32 @@ function UserList(props) {
                   </TableCell>
                   <TableCell>{n.patenttile}</TableCell>
                   <TableCell>
-                    <PictureAsPdfIcon />
-                    <VisibilityIcon />
+                    <List className={classes.listIcons}>
+                      <ListItem button className={classes.icon}>
+                        <ListItemIcon>
+                          <Link
+                            target="_blank"
+                            rel="noopener"
+                            href={`https://patents.google.com/patent/${n.patentno}`}
+                            color="inherit"
+                          >
+                            <PictureAsPdfIcon />
+                          </Link>
+                        </ListItemIcon>
+                      </ListItem>
+                      <ListItem button className={classes.icon}>
+                        <ListItemIcon>
+                          <Link
+                            target="_blank"
+                            rel="noopener"
+                            href={`https://patents.google.com/patent/${n.patentno}`}
+                            color="inherit"
+                          >
+                            <VisibilityIcon />
+                          </Link>
+                        </ListItemIcon>
+                      </ListItem>
+                    </List>
                   </TableCell>
                 </TableRow>
               )
@@ -194,4 +222,4 @@ function UserList(props) {
   )
 }
 
-export default withStyles(styles)(UserList)
+export default withStyles(styles)(ChemicalSearchedList)

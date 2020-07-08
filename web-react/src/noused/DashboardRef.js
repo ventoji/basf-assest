@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 
 // import RatingsChart from './RatingsChart'
-import FilterContainer from '../container/FilterContainer'
+import UserCount from './UserCount'
 // cimport RecentReviews from './RecentReviews'
 import ChemicalType from './ChemicalType'
 
@@ -23,7 +23,7 @@ export default function Dashboard() {
       flexDirection: 'column',
     },
     fixedHeight: {
-      height: 440,
+      height: 240,
     },
   }))
   const classes = useStyles(theme)
@@ -34,20 +34,24 @@ export default function Dashboard() {
       <Grid container spacing={4}>
         {/* Recent Reviews */}
         <Grid item xs={12}>
-          <FilterContainer />
+          <Paper className={classes.paper}></Paper>
         </Grid>
-        {/* Document Count */}
-        <Grid item xs={12}></Grid>
+        {/* User Count */}
+        <Grid item xs={12}>
+          <Paper className={fixedHeightPaper}>
+            <UserCount />
+          </Paper>
+        </Grid>
         {/* Chemical Type 1 */}
         <Grid item xs={12} md={6} lg={6}>
           <Paper className={fixedHeightPaper}>
-            <ChemicalType typeC={1} name="chemicaltype1" />
+            <ChemicalType listChemical="listChemical1" name="chemicaltype1" />
           </Paper>
         </Grid>
         {/* Chemical type 2 */}
         <Grid item xs={12} md={6} lg={6}>
           <Paper className={fixedHeightPaper}>
-            <ChemicalType typeC={2} name="chemicaltype2" />
+            <ChemicalType listChemical="listChemical2" name="chemicaltype2" />
           </Paper>
         </Grid>
       </Grid>
