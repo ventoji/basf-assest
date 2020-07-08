@@ -97,8 +97,6 @@ GRAPHQL_SERVER_PATH=/graphql
 
 ### [`/web-react`](./web-react)
 
-![](img/grandstack-app.png)
-
 The frontend React web application is found in this directory.
 
 It includes:
