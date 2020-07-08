@@ -20,7 +20,6 @@ npm start
 
 This will serve the app on `http://localhost:3000`
 
-![](img/default-app.png)
 
 ## Configure
 
@@ -33,19 +32,6 @@ Edit `.env` to specify the URI of the GraphQL API. The default is `http://localh
 ```
 REACT_APP_GRAPHQL_URI=http://localhost:4000
 ```
-
-## Material-UI
-
-[Material-UI](https://material-ui.com/) components are included. See [the docs](https://material-ui.com/getting-started/usage/) for an overview of the components included. This code challenge makes use of the Material-UI components.
-
-## Create React App
-
-
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-
-Below you will find some information on how to perform common tasks.<br>
-You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
-
 
 ## Folder Structure
 
@@ -76,16 +62,6 @@ For the project to build, **these files must exist with exact filenames**:
 * `public/index.html` is the page template;
 * `src/index.js` is the JavaScript entry point.
 
-You can delete or rename the other files.
-
-You may create subdirectories inside `src`. For faster rebuilds, only files inside `src` are processed by Webpack.<br>
-You need to **put any JS and CSS files inside `src`**, otherwise Webpack won’t see them.
-
-Only files inside `public` can be used from `public/index.html`.<br>
-Read instructions below for using assets from JavaScript and HTML.
-
-You can, however, create more top-level directories.<br>
-They will not be included in the production build so you can use them for things like documentation.
 
 ## Available Scripts
 
@@ -129,33 +105,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 By default, the generated project uses the latest version of React.
 
 You can refer [to the React documentation](https://reactjs.org/docs/react-dom.html#browser-support) for more information about supported browsers.
-
-## Supported Language Features and Polyfills
-
-This project supports a superset of the latest JavaScript standard.<br>
-In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, it also supports:
-
-* [Exponentiation Operator](https://github.com/rwaldron/exponentiation-operator) (ES2016).
-* [Async/await](https://github.com/tc39/ecmascript-asyncawait) (ES2017).
-* [Object Rest/Spread Properties](https://github.com/sebmarkbage/ecmascript-rest-spread) (stage 3 proposal).
-* [Dynamic import()](https://github.com/tc39/proposal-dynamic-import) (stage 3 proposal)
-* [Class Fields and Static Properties](https://github.com/tc39/proposal-class-public-fields) (part of stage 3 proposal).
-* [JSX](https://facebook.github.io/react/docs/introducing-jsx.html) and [Flow](https://flowtype.org/) syntax.
-
-Learn more about [different proposal stages](https://babeljs.io/docs/plugins/#presets-stage-x-experimental-presets-).
-
-While we recommend using experimental proposals with some caution, Facebook heavily uses these features in the product code, so we intend to provide [codemods](https://medium.com/@cpojer/effective-javascript-codemods-5a6686bb46fb) if any of these proposals change in the future.
-
-Note that **the project only includes a few ES6 [polyfills](https://en.wikipedia.org/wiki/Polyfill)**:
-
-* [`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) via [`object-assign`](https://github.com/sindresorhus/object-assign).
-* [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) via [`promise`](https://github.com/then/promise).
-* [`fetch()`](https://developer.mozilla.org/en/docs/Web/API/Fetch_API) via [`whatwg-fetch`](https://github.com/github/fetch).
-
-If you use any other ES6+ features that need **runtime support** (such as `Array.from()` or `Symbol`), make sure you are including the appropriate polyfills manually, or that the browsers you are targeting already support them.
-
-Also note that using some newer syntax features like `for...of` or `[...nonArrayValue]` causes Babel to emit code that depends on ES6 runtime features and might not work without a polyfill. When in doubt, use [Babel REPL](https://babeljs.io/repl/) to see what any specific syntax compiles down to.
-
 
 ## Formatting Code Automatically
 
@@ -208,19 +157,5 @@ Now, whenever you make a commit, Prettier will format the changed files automati
 Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://prettier.io/docs/en/editors.html) on the Prettier GitHub page.
 
 
-## Installing a Dependency
 
-The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
-
-```sh
-npm install --save react-router
-```
-
-Alternatively you may use `yarn`:
-
-```sh
-yarn add react-router
-```
-
-This works for any library, not just `react-router`.
 
