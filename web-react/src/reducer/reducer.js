@@ -4,10 +4,15 @@
  */
 
 import { combineReducers } from 'redux'
-import { SET_CHEMICALNAME_FILTER, SET_CURRENT_CHEMICAL_SEARCH } from './actions'
+import {
+  SET_CHEMICALNAME_FILTER,
+  SET_CURRENT_CHEMICAL_SEARCH,
+  SET_CHEMICAL_TYPE,
+} from './actions'
 
 const filterReducerDefaultState = {
   chemicalName: '',
+  chemicalType: 1,
 }
 
 export const filterChemicalNameReducer = (
@@ -19,6 +24,11 @@ export const filterChemicalNameReducer = (
       return {
         ...state,
         chemicalName: action.payload,
+      }
+    case SET_CHEMICAL_TYPE:
+      return {
+        ...state,
+        chemicalType: action.payload,
       }
     default:
       return state

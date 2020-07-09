@@ -1,17 +1,17 @@
-type Chemcial1 {
-  patentno: ID!
+type Chemical1 {
+  patentno: String
   patenttile: String
   chemicaltype1: String
 }
 
-type Chemcial2 {
-  patentno: ID!
+type Chemical2 {
+  patentno: String
   patenttile: String
   chemicaltype2: String
 }
 
 type Chemical {
-  patentno: ID!
+  patentno: String
   patenttile: String
   chemicaltype1: String
   chemicaltype2: String
@@ -24,11 +24,16 @@ type Mutation {
     )
 }
 
+
+
 type Query {
-  totalChemical11: Int! @cypher(statement: "MATCH (e:Chemcial1) RETURN COUNT(e)")
-  totalChemical22: Int! @cypher(statement: "MATCH (f:Chemcial2) RETURN COUNT(f)")
-  listChemical2: [Chemcial2]! @cypher(statement: "MATCH (f:Chemcial2) RETURN (f) ORDER BY f.chemicaltype2")
-  listChemical1: [Chemcial1]! @cypher(statement: "MATCH (e:Chemcial1) RETURN (e) ORDER BY e.chemicaltype1")
-  listChemical11(patentno: ID, patenttile: String, chemicaltype1: String): [Chemcial1]
-  listChemical22(patentno: ID, patenttile: String, chemicaltype2: String): [Chemcial2]
+  totalChemical11: Int! @cypher(statement: "MATCH (e:Chemical1) RETURN COUNT(e)")
+  totalChemical22: Int! @cypher(statement: "MATCH (f:Chemical2) RETURN COUNT(f)")
+  listChemical2: [Chemical2]! @cypher(statement: "MATCH (f:Chemical2) RETURN (f) ORDER BY f.chemicaltype2")
+  listChemical1: [Chemical1]! @cypher(statement: "MATCH (e:Chemical1) RETURN (e) ORDER BY e.chemicaltype1")
+  listChemical11(patentno: String, patenttile: String, chemicaltype1: String): [Chemical1]
+  listChemical22(patentno: String, patenttile: String, chemicaltype2: String): [Chemical2]
+  listChemicall(patentno: String, patenttile: String, chemicaltype1: String, chemicaltype2: String): [Chemical]
+  listChemical: [Chemical]! @cypher(statement: "MATCH (n) RETURN (n) ORDER BY n.patentno")
+  filterChemical(titleSearch: String!): [Chemical]!   @cypher( statement: "MATCH (n) WHERE n.chemicaltype2 CONTAINS $titleSearch OR n.chemicaltype1 CONTAINS $titleSearch RETURN n.patentno, n.chemicaltype1, n.chemicaltype2")
   }

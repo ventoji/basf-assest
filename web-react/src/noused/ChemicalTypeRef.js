@@ -13,7 +13,42 @@ import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Title from './Title'
 import { groupingChemicalTypebyName } from '../utils'
+/* 
+const GET_CHEMICAL_TYPE11 = gql`  
+query Chemical1PaginateQuery(
+  $first: Int
+  $offset: Int
+  $orderBy: [_Chemcial1Ordering]
+  $filter: _Chemcial1Filter
+) {
+  Chemcial1(
+    first: $first
+    offset: $offset
+    orderBy: $orderBy
+    filter: $filter
+  ) {
+    chemicaltype1
+  }
+}`
 
+const GET_CHEMICAL_TYPE22 = gql`
+query Chemical2PaginateQuery(
+  $first: Int
+  $offset: Int
+  $orderBy: [_Chemcial2Ordering]
+  $filter: _Chemcial2Filter
+) {
+  Chemcial2(
+    first: $first
+    offset: $offset
+    orderBy: $orderBy
+    filter: $filter
+  ) {
+    chemicaltype2
+  }
+}
+`
+ */
 const GET_CHEMICAL_TYPES1 = gql`
   {
     listChemical1 {

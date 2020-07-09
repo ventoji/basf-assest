@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   smallHeight: {
     height: 150,
     padding: 20,
+    marginTop: 20,
   },
 }))
 
@@ -31,7 +32,7 @@ export default function FilterInitial({ setFilterChemicalSearch }) {
   const classes = useStyles()
 
   const handleSubmit = (e) => {
-    console.log('submit action made', textFilter)
+    // console.log('submit action made', textFilter)
     e.preventDefault()
     if (textFilter.length > 0) {
       setFilterChemicalSearch(textFilter)

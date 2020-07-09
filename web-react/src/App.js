@@ -27,10 +27,12 @@ import {
   ChevronLeft as ChevronLeftIcon,
   Menu as MenuIcon,
   Dashboard as DashboardIcon,
-  People as PeopleIcon,
 } from '@material-ui/icons'
 import Dashboard from './components/Dashboard'
 import ChemicalSearchedContainer from './container/ChemicalSearchContainer'
+import TimelineIcon from '@material-ui/icons/Timeline'
+import HelpIcon from '@material-ui/icons/Help'
+import Information from './components/Information'
 
 function Copyright() {
   return (
@@ -203,12 +205,22 @@ export default function App() {
             <Link to="/chemicaltype" className={classes.navLink}>
               <ListItem button>
                 <ListItemIcon>
-                  <PeopleIcon />
+                  <TimelineIcon />
                 </ListItemIcon>
                 <ListItemText primary="Last search" />
               </ListItem>
             </Link>
+
+            <Link to="/information" className={classes.navLink}>
+              <ListItem button>
+                <ListItemIcon>
+                  <HelpIcon />
+                </ListItemIcon>
+                <ListItemText primary="Information" />
+              </ListItem>
+            </Link>
           </List>
+
           <Divider />
         </Drawer>
         <main className={classes.content}>
@@ -221,6 +233,7 @@ export default function App() {
                 path="/chemicaltype"
                 component={ChemicalSearchedContainer}
               />
+              <Route exact path="/information" component={Information} />
             </Switch>
 
             <Box pt={4}>

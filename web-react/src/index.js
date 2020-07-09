@@ -11,8 +11,8 @@ import { Provider } from 'react-redux'
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI || '/graphql',
 })
-// console.log('initial, state:', store.getState());
-// const unsubscribe = store.subscribe(() => console.log(store.getState()));
+//console.log('initial, state:', store.getState());
+//const unsubscribe = store.subscribe(() => console.log(store.getState()));
 
 const Main = () => (
   <ApolloProvider client={client}>

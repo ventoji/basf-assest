@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import Title from './Title'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
+import { filterByName } from '../utils/index'
 
 const useStyles = makeStyles({
   depositContext: {
@@ -16,46 +17,40 @@ const useStyles = makeStyles({
 })
 
 const GET_CHEMICAL_SEARCH = gql`
-  query(
-    $first: Int
-    $offset: Int
-    $orderby: [_Chemical1Ordering]
-    $filter: _Chemical1Filter
-  ) {
-    Chemical1(
-      first: $first
-      offset: $offset
-      orderBy: $orderby
-      filter: $filter
-    ) {
-      patenttile
-      chemicaltype1
+  query($first: Int, $offset: Int, $orderby: [_ChemicalOrdering]) {
+    listChemical(first: $first, offset: $offset, orderBy: $orderby) {
       patentno
+      chemicaltype1
+      chemicaltype2
+      _id
     }
   }
 `
-export default function Deposits({ chemicalName, setCurrentChemicalSearch }) {
+export default function DocumentCountAll({
+  chemicalName,
+  setCurrentChemicalSearch,
+}) {
   const classes = useStyles()
 
+  // const [chemicalType, setChemicalType] = useState()
   const [order] = useState('asc')
   const [orderBy] = useState('patenttile')
   const [page] = useState(1)
   const [rowsPerPage] = useState(-1)
-  const [filterState, setFilterState] = useState({ chemicalFilter: '' })
-  const [fecthResult, setfetchResult] = useState(chemicalName)
+  // const [filterState, setFilterState] = useState({ chemicalFilter: '' })
+  const [fecthResult, setfetchResult] = useState('')
 
-  const getFilter = () => {
+  /*   const getFilter = () => {
     return filterState.chemicalFilter.length > 0
       ? { chemicaltype1_contains: filterState.chemicalFilter }
       : {}
-  }
+  } */
 
   const { loading, data, error } = useQuery(GET_CHEMICAL_SEARCH, {
     variables: {
       first: rowsPerPage,
       offset: rowsPerPage * page,
       orderBy: orderBy + '_' + order,
-      filter: getFilter(),
     },
     onCompleted: setCurrentChemicalSearch,
   })
@@ -65,7 +60,8 @@ export default function Deposits({ chemicalName, setCurrentChemicalSearch }) {
      *  and show count and link for display in other page
      */
     setfetchResult(chemicalName)
-    setFilterState({ chemicalFilter: chemicalName })
+
+    //  setFilterState({ chemicalFilter: chemicalName })
   }, [chemicalName])
 
   if (error) return <p>Error</p>
@@ -73,7 +69,9 @@ export default function Deposits({ chemicalName, setCurrentChemicalSearch }) {
     <React.Fragment>
       <Title>Total Documents {fecthResult}</Title>
       <Typography component="p" variant="h4">
-        {loading ? 'Loading...' : data.Chemical1.length}
+        {loading
+          ? 'Loading...'
+          : filterByName(data.listChemical, chemicalName).length}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         documents found
