@@ -109,10 +109,16 @@ function ChemicalSearchedList({
     // setUserData(chemicalSearch)
 
     setFilterState({ chemicalFilter: chemicalName })
-  }, [chemicalSearch])
+  }, [chemicalSearch, chemicalType])
   const getFilter = () => {
+    let filterObject;
+    if(chemicalType === 1){
+      filterObject = { chemicaltype1_contains: filterState.chemicalFilter }
+    }else{
+      filterObject = { chemicaltype2_contains: filterState.chemicalFilter }
+    }
     return filterState.chemicalFilter.length > 0
-      ? { chemicaltype1_contains: filterState.chemicalFilter }
+      ? filterObject
       : {}
   }
 

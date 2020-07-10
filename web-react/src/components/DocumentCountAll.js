@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography'
 import Title from './Title'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
-import { filterByName } from '../utils/index'
 
 const useStyles = makeStyles({
   depositContext: {
@@ -28,11 +27,13 @@ const GET_CHEMICAL_SEARCH = gql`
 `
 export default function DocumentCountAll({
   chemicalName,
+  chemicalSearch,
+  setChemicalType,
   setCurrentChemicalSearch,
 }) {
   const classes = useStyles()
 
-  // const [chemicalType, setChemicalType] = useState()
+  //const [chemicalType, setChemicalType] = useState()
   const [order] = useState('asc')
   const [orderBy] = useState('patenttile')
   const [page] = useState(1)
@@ -60,18 +61,20 @@ export default function DocumentCountAll({
      *  and show count and link for display in other page
      */
     setfetchResult(chemicalName)
+    setChemicalType(chemicalSearch.typeChemical)
 
     //  setFilterState({ chemicalFilter: chemicalName })
   }, [chemicalName])
 
   if (error) return <p>Error</p>
+ // if (!loading) return setChemicalType(chemicalSearch.typeChemical)
   return (
     <React.Fragment>
       <Title>Total Documents {fecthResult}</Title>
       <Typography component="p" variant="h4">
         {loading
           ? 'Loading...'
-          : filterByName(data.listChemical, chemicalName).length}
+          : chemicalSearch.totalDocuments}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         documents found
