@@ -1,5 +1,18 @@
 import _ from 'lodash'
 
+export const filteredPatent = (listPatents) => {
+   // console.log('listpaten',listPatents)
+  /*   return {
+        chemical1: groupingChemicalTypebyName(listPatents.Chemical1,'chemicaltype1'),
+        chemical2: groupingChemicalTypebyName(listPatents.Chemical2,'chemicaltype2')
+    } */
+
+    return {
+      chemical1: listPatents.Chemical1,
+      chemical2: listPatents.Chemical2
+  }
+}
+
 export const filteredChemical = (listChemical, {chemicalName}) => {
 
     let data = listChemical
@@ -16,7 +29,7 @@ export const filteredChemical = (listChemical, {chemicalName}) => {
 
         if (totalDocuments) {
         
-            console.log(data[0])
+          //  console.log(data[0])
             if (data[0].chemicaltype1 !==null){
                 type = 1
             }else{
@@ -33,26 +46,3 @@ export const filteredChemical = (listChemical, {chemicalName}) => {
      }
     
    }
-
-export const filteredChemical1 = (data,name) => {
-   //let {count,chemicalName} = {...rest}
-    let count = data;
-   console.log(count)
-
-   console.log(data[0])
-
-   if (name.length > 0) {
-    count = _.filter(data, (o) => {
-      return _.includes(o, name)
-    })
-
-    count = _.orderBy(count, name)
-
-   }
-
-    return count;
-   
-  /*   return data.filter((chemical,i) => {
-      return chemical.name.toLowerCase().includes(chemicalName.toLowerCase());
-    }); */
-  }

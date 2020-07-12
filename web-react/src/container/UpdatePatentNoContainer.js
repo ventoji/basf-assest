@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { setCurrentChemicalSearch, setChemicalType } from '../reducer/actions'
 import { bindActionCreators } from 'redux'
-import DocumentCountAll from '../components/DocumentCountAll'
+import UpdatePatentNo from '../components/UpdatePatentNo'
 import { filteredChemical } from '../reducer/selectors'
 
 export const mapStateToProps = (state) => ({
@@ -12,9 +12,9 @@ export const mapStateToProps = (state) => ({
 export const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ setCurrentChemicalSearch, setChemicalType }, dispatch)
 
-const DocumentContainer = connect(
+const UpdatePatentNoContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(DocumentCountAll)
+)(UpdatePatentNo)
 
-export default DocumentContainer
+export default UpdatePatentNoContainer

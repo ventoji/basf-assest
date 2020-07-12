@@ -101,7 +101,7 @@ function ChemicalSearchedList({
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('patenttile')
   const [page, setPage] = React.useState(0)
-  const [rowsPerPage, setRowsPerPage] = React.useState(12)
+  const [rowsPerPage, setRowsPerPage] = React.useState(10)
   const [filterState, setFilterState] = React.useState({ chemicalFilter: '' })
 
   useEffect(() => {

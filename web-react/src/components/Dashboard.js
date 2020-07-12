@@ -7,7 +7,10 @@ import clsx from 'clsx'
 // import RatingsChart from './RatingsChart'
 import FilterContainer from '../container/FilterContainer'
 // cimport RecentReviews from './RecentReviews'
-import ChemicalType from './ChemicalType'
+ import ChemicalType from './ChemicalType'
+import UpdatePatentNoContainer from '../container/UpdatePatentNoContainer'
+import Typography from '@material-ui/core/Typography'
+
 
 export default function Dashboard() {
   const theme = useTheme()
@@ -25,6 +28,9 @@ export default function Dashboard() {
     fixedHeight: {
       height: 440,
     },
+    depositContext: {
+      flex: 1,
+    }
   }))
   const classes = useStyles(theme)
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
@@ -32,12 +38,19 @@ export default function Dashboard() {
   return (
     <React.Fragment>
       <Grid container spacing={4}>
-        {/* Recent Reviews */}
+        {/* Filter */}
         <Grid item xs={12}>
           <FilterContainer />
         </Grid>
-        {/* Document Count */}
-        <Grid item xs={12}></Grid>
+          {/* Look for Patent No */}
+          <Grid item xs={12}>
+          <UpdatePatentNoContainer />
+        </Grid>
+        <Grid item xs={12}>
+        <Typography color="textSecondary" className={classes.depositContext}>
+         Use information below to look for a chemical type in the search box above.
+      </Typography>
+        </Grid>
         {/* Chemical Type 1 */}
         <Grid item xs={12} md={6} lg={6}>
           <Paper className={fixedHeightPaper}>

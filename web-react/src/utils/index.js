@@ -6,6 +6,9 @@ import _ from 'lodash'
  *  according to chemicaltype propertie.
  */
 export const groupingChemicalTypebyName = (data, name) => {
+  if(_.size(data)===0){
+    return data
+  }
   const count = _(data)
     .groupBy(name)
     .map((items, name) => ({ name, count: items.length }))
@@ -14,24 +17,34 @@ export const groupingChemicalTypebyName = (data, name) => {
   return count
 }
 
-/* export const filterByName = (data, name) => {
-  console.log(data[0], name)
-  if (data[0].chemicaltype2 !== null) {
-    store.dispatch(setChemicalType(2))
-  } else {
-    store.dispatch(setChemicalType(1))
-  }
-  let count
-  if (name.length > 0) {
-    count = _.filter(data, (o) => {
-      return _.includes(o, name)
-    })
+export const findCommonPatentsNo = (data, newState) => {
 
-    count = _.orderBy(count, name)
-    store.dispatch(setCurrentChemicalSearch(count))
-    // console.log('count',count);
-    return count
-  }
+ //  console.log(data);
 
+   if(_.size(data)===0){
+     return  newState;
+   }
+
+   if(_.size(newState)===0){
+     return data;
+   }
+
+  _.map(newState, (chem) =>{
+
+    const indexObj = _.findIndex(data,chem);
+
+    if(indexObj!==-1){
+        let currentCount = data[indexObj].count;
+        data[indexObj].count= currentCount+1
+
+       
+    }else{
+          data = [
+            chem,...data, 
+          ] 
+    }
+})
   return data
-} */
+}
+
+

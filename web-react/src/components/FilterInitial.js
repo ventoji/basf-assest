@@ -40,7 +40,7 @@ export default function FilterInitial({ setFilterChemicalSearch }) {
   }
 
   const handleFilterChange = (e) => {
-    console.log(e.target.value)
+  //  console.log(e.target.value)
     const chemicalText = e.target.value
     setTextFilter(chemicalText)
   }
