@@ -14,16 +14,20 @@ const {
 } = process.env
 
 const uri = `http://${host}:${port}${path}`
-
+console.log(uri)
 const client = new ApolloClient({
   link: new HttpLink({ uri, fetch }),
   cache: new InMemoryCache(),
+  onError: ({ networkError, graphQLErrors }) => {
+    console.log('graphQLErrors', graphQLErrors)
+    console.log('networkError', networkError)
+  },
 })
 
 const runMutations = async () => {
   const mutations = await getSeedMutations()
 
-  // console.log('testing',mutations);
+  console.log('testing')
   return Promise.all(
     mutations.map(({ mutation, variables }) => {
       return client
@@ -32,7 +36,7 @@ const runMutations = async () => {
           variables,
         })
         .catch((e) => {
-          console.log('entra')
+          //console.log('entra', e)
           throw new Error(e)
         })
     })
