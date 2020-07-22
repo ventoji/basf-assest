@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Title from './Title'
-import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
+import { fetchChemicalTypeSearchedByUser } from '../utils/generateQueries'
 
 const useStyles = makeStyles({
   depositContext: {
@@ -15,16 +15,6 @@ const useStyles = makeStyles({
   },
 })
 
-const GET_CHEMICAL_SEARCH = gql`
-  query($first: Int, $offset: Int, $orderby: [_ChemicalOrdering]) {
-    listChemical(first: $first, offset: $offset, orderBy: $orderby) {
-      patentno
-      chemicaltype1
-      chemicaltype2
-      _id
-    }
-  }
-`
 export default function DocumentCountAll({
   chemicalName,
   chemicalSearch,
@@ -47,7 +37,7 @@ export default function DocumentCountAll({
       : {}
   } */
 
-  const { loading, data, error } = useQuery(GET_CHEMICAL_SEARCH, {
+  const { loading, data, error } = useQuery(fetchChemicalTypeSearchedByUser(), {
     variables: {
       first: rowsPerPage,
       offset: rowsPerPage * page,

@@ -10,25 +10,10 @@ import {
 } from '@material-ui/core'
 
 import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
 import Title from './Title'
 import { groupingChemicalTypebyName } from '../utils'
+import { createQueryForChemicalType } from '../utils/generateQueries'
 
-const GET_CHEMICAL_TYPES1 = gql`
-  {
-    listChemical1 {
-      chemicaltype1
-    }
-  }
-`
-
-const GET_CHEMICAL_TYPES2 = gql`
-  {
-    listChemical2 {
-      chemicaltype2
-    }
-  }
-`
 
 export default function ChemicalType({ typeC, name }) {
   const [chemicalType, setChemicalType] = useState(typeC)
@@ -48,9 +33,8 @@ export default function ChemicalType({ typeC, name }) {
       : {}
   } */
 
-  const { loading, error, data } = useQuery(
-    chemicalType === 1 ? GET_CHEMICAL_TYPES1 : GET_CHEMICAL_TYPES2
-  )
+  const { loading, error, data } = useQuery (createQueryForChemicalType(`listChemical${chemicalType}`,name))
+
   /* 
   const { loading, data, error } = useQuery(
     chemicalType === 1 ? GET_CHEMICAL_TYPE11 : GET_CHEMICAL_TYPE22 , {
@@ -79,7 +63,7 @@ export default function ChemicalType({ typeC, name }) {
 
   return (
     <React.Fragment>
-      <Title>Chemical Type {typeC}</Title>
+      <Title>Chemical Type {chemicalType}</Title>
       <p> {name}</p>
       <Table size="small">
         <TableHead>
@@ -103,7 +87,7 @@ export default function ChemicalType({ typeC, name }) {
         </TableHead>
         <TableBody>
           {groupingChemicalTypebyName(
-            chemicalType === 1 ? data.listChemical1 : data.listChemical2,
+            data[`listChemical${chemicalType}`],
             name
           ).map((row, index) => (
             <TableRow key={index}>

@@ -23,3 +23,8 @@ yarn-error.log*
 *~
 *.orig
 
+# react components unused
+
+web-react/src/noused
+
+

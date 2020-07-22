@@ -21,14 +21,14 @@
     "apollo-server": "^2.13.1",
     "apollo-server-lambda": "^2.13.1",
     "csv-parse": "^4.10.1",
-    "dotenv": "^7.0.0",
+    "dotenv": "^8.2.0",
     "graphql-tag": "^2.10.1",
     "neo4j-driver": "^4.0.2",
     "neo4j-graphql-js": "^2.14.2",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
+    "@babel/cli": "^7.10.5",
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -40,7 +40,7 @@
     "babel-plugin-auto-import": "^1.0.5",
     "babel-plugin-module-resolver": "^4.0.0",
     "cross-env": "^7.0.2",
-    "nodemon": "^1.19.1",
+    "nodemon": "^2.0.4",
     "shx": "^0.3.2"
   }
 }

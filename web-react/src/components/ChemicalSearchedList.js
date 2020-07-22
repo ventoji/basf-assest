@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
 import { withStyles } from '@material-ui/core/styles'
 import {
   Table,
@@ -20,9 +19,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf'
 import List from '@material-ui/core/List'
-// import SelectEntriesChemical from './SelectEntriesChemical';
 import Title from './Title'
 import Link from '@material-ui/core/Link'
+import { createSearchedChemicalList } from '../utils/generateQueries'
 
 const styles = (theme) => ({
   root: {
@@ -48,55 +47,14 @@ const styles = (theme) => ({
   },
 })
 
-const GET_CHEMICAL_TYPE1 = gql`
-  query(
-    $first: Int
-    $offset: Int
-    $orderBy: [_Chemical1Ordering]
-    $filter: _Chemical1Filter
-  ) {
-    Chemical1(
-      first: $first
-      offset: $offset
-      orderBy: $orderBy
-      filter: $filter
-    ) {
-      patentno
-      patenttile
-      chemicaltype1
-    }
-  }
-`
-
-const GET_CHEMICAL_TYPE2 = gql`
-  query(
-    $first: Int
-    $offset: Int
-    $orderBy: [_Chemical2Ordering]
-    $filter: _Chemical2Filter
-  ) {
-    Chemical2(
-      first: $first
-      offset: $offset
-      orderBy: $orderBy
-      filter: $filter
-    ) {
-      patentno
-      patenttile
-      chemicaltype2
-    }
-  }
-`
 
 function ChemicalSearchedList({
   classes,
   chemicalSearch,
   chemicalName,
-  chemicalType,
+  chemicalType=1,
 }) {
-  //const { classes } = props
-  //const classes = styles();
-  // const [userData, setUserData] = useState({});
+ 
 
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('patenttile')
@@ -105,11 +63,11 @@ function ChemicalSearchedList({
   const [filterState, setFilterState] = React.useState({ chemicalFilter: '' })
 
   useEffect(() => {
-    // console.log(chemicalSearch)
-    // setUserData(chemicalSearch)
+  
 
     setFilterState({ chemicalFilter: chemicalName })
   }, [chemicalSearch, chemicalType])
+  
   const getFilter = () => {
     let filterObject;
     if(chemicalType === 1){
@@ -121,9 +79,9 @@ function ChemicalSearchedList({
       ? filterObject
       : {}
   }
-
+ 
   const { loading, data, error } = useQuery(
-    chemicalType === 1 ? GET_CHEMICAL_TYPE1 : GET_CHEMICAL_TYPE2,
+    createSearchedChemicalList(`Chemical${chemicalType}`,`chemicaltype${chemicalType}`),
     {
       variables: {
         first: rowsPerPage,
@@ -190,7 +148,7 @@ function ChemicalSearchedList({
             rowsPerPageOptions={[5, 10, 25, 50, 100]}
             component="div"
             count={
-              chemicalType === 1 ? data.Chemical1.length : data.Chemical2.length
+              data[`Chemical${chemicalType}`].length
             }
             rowsPerPage={rowsPerPage}
             page={page}
@@ -242,7 +200,7 @@ function ChemicalSearchedList({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {(chemicalType === 1 ? data.Chemical1 : data.Chemical2).map(
+                {(data[`Chemical${chemicalType}`]).map(
                   (n, index) => {
                     return (
                       <TableRow key={index}>

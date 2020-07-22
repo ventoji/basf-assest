@@ -3,14 +3,14 @@ import { useTheme } from '@material-ui/core/styles'
 import { Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
-
-// import RatingsChart from './RatingsChart'
 import FilterContainer from '../container/FilterContainer'
-// cimport RecentReviews from './RecentReviews'
  import ChemicalType from './ChemicalType'
 import UpdatePatentNoContainer from '../container/UpdatePatentNoContainer'
 import Typography from '@material-ui/core/Typography'
 
+/**
+ * Main page for the app
+ */
 
 export default function Dashboard() {
   const theme = useTheme()

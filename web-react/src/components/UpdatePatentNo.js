@@ -45,7 +45,7 @@ export default function DocumentCountAll({
     {/*console.log('updatePatent',chemicalSearch)*/}
     
     {_.size(chemicalName)>0 && _.map(chemicalSearch.listChemical,(item, index) => {
-        return <div key={index} className={index===sizeListChemical-1? classes.visible :classes.noVisible}>
+        return <div key={`${index}${item.patentno}`} className={index===sizeListChemical-1? classes.visible :classes.noVisible}>
         <FindPatentNoContainer patentno ={item.patentno}/>
        
         </div>

@@ -127,7 +127,7 @@ const EnhancedTableToolbar = (props) => {
       className={classes.toolbar}
     >
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Chemical Type 
+          Chemical Type {props.typeC}
         </Typography>
     </Toolbar>
   );
@@ -163,7 +163,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ChemicalPatents({patentSearch}) {
+export default function ChemicalPatents({patentSearch,typeC}) {
   const classes = useStyles();
   const [rows,setData] = useState([])
   const [order, setOrder] = useState('asc');
@@ -231,7 +231,7 @@ export default function ChemicalPatents({patentSearch}) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} typeC={typeC}/>
         <TableContainer>
           <Table
             className={classes.table}
@@ -249,7 +249,9 @@ export default function ChemicalPatents({patentSearch}) {
               rowCount={rows.length}
             />
             <TableBody>
-              {_.map(rows,(row, index) => {
+              {_.chain(rows)
+               .sortBy(orderBy)
+               .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -272,7 +274,8 @@ export default function ChemicalPatents({patentSearch}) {
                       <TableCell align="right">{row.count}</TableCell>
                     </TableRow>
                   );
-                })}
+                })
+                .value()}
               {emptyRows > 0 && (
                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                   <TableCell colSpan={6} />

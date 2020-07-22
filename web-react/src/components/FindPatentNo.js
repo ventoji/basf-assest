@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Title from './Title'
-import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import { Grid, Paper } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import clsx from 'clsx'
-// import ChemicalTypeRecf from './ChemicalTypeRecf'
 import ChemicalPatents from './ChemicalPatents'
+import { findEqualPatents } from '../utils/generateQueries'
 
 const useStyles = makeStyles({
   depositContext: {
@@ -28,17 +27,6 @@ const useStyles = makeStyles({
   },
 })
 
-
-const GET_PATENTNO_SEARCH = gql`
-query($patentno: String!){
-    Chemical2(patentno: $patentno){
-      chemicaltype2
-    }
-    Chemical1(patentno: $patentno){
-      chemicaltype1
-    }
-  }
-`
 export default function FindAllPatentNo({
   chemicalName,
   setCurrentChemicalPatent,
@@ -49,11 +37,11 @@ export default function FindAllPatentNo({
   ///const classes = useStyles()
   const theme = useTheme()
   const classes = useStyles(theme)
- const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
- 
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+  
 
   // const [chemicalPatentData, setChemicalPatentData] = useState({})
-   const [patentNo, setPatentNo] = useState(patentno)
+  const [patentNo] = useState(patentno)
   const [order] = useState('asc')
   const [orderBy] = useState('patenttile')
   const [page] = useState(1)
@@ -67,7 +55,7 @@ export default function FindAllPatentNo({
       : {}
   } */
 
-  const { loading, data, error } = useQuery(GET_PATENTNO_SEARCH , {
+  const { loading, data, error } = useQuery(findEqualPatents(), {
     variables: {
       patentno: patentNo,
       first: rowsPerPage,
@@ -102,7 +90,7 @@ export default function FindAllPatentNo({
            {/* Chemical Type 1 */}
            <Grid item xs={12} md={6} lg={6}>
            <Paper className={fixedHeightPaper}>
-           <ChemicalPatents patentSearch={chemicalPatentNo.chemical1} />
+           <ChemicalPatents patentSearch={chemicalPatentNo.chemical1} typeC="1" />
             {/*_.map(chemicalPatentNo.chemical1, (item,index) => {
                 return <p key={index}> {item.name}:{item.count}</p>
             })*/}
@@ -111,7 +99,7 @@ export default function FindAllPatentNo({
          {/* Chemical type 2 */}
          <Grid item xs={12} md={6} lg={6}>
            <Paper className={fixedHeightPaper}>
-           <ChemicalPatents patentSearch={chemicalPatentNo.chemical2} />
+           <ChemicalPatents patentSearch={chemicalPatentNo.chemical2} typeC="2" />
            {/*_.map(chemicalPatentNo.chemical2, (item,index) => {
             return <p key={index}> {item.name}: {item.count}</p>
         })*/} 
