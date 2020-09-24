@@ -41,7 +41,7 @@ export default function FindAllPatentNo({
   
 
   // const [chemicalPatentData, setChemicalPatentData] = useState({})
-  const [patentNo] = useState(patentno)
+  const [patentNo,setPatentNo] = useState(patentno)
   const [order] = useState('asc')
   const [orderBy] = useState('patenttile')
   const [page] = useState(1)
@@ -70,11 +70,16 @@ export default function FindAllPatentNo({
      *  and show count and link for display in other page
      */
     setfetchResult(chemicalName)
-   // setPatentNo(patentno) //"US5342626")
+    setPatentNo(patentno) //"US5342626")
   //  setChemicalType(chemicalSearch.typeChemical)
 
     //  setFilterState({ chemicalFilter: chemicalName })
-  }, [chemicalName])
+
+    return () => {
+      console.log('cleaned up')
+      console.log(patentNo)
+    }
+  }, [ chemicalName,patentno]) //
 
   if (error) return <p>Error</p>
  // if (!loading) return setChemicalType(chemicalSearch.typeChemical)

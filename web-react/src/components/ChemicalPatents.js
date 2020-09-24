@@ -15,37 +15,9 @@ import Paper from '@material-ui/core/Paper'
 import _ from 'lodash'
 
 
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-    console.log(array)
-/*   const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]); */
-  return array
-}
-
 const headCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Names' },
-  { id: 'documents', numeric: true, disablePadding: false, label: 'Documents' },
+  { id: 'count', numeric: true, disablePadding: false, label: 'Documents' },
 ];
 
 function EnhancedTableHead(props) {
@@ -176,6 +148,9 @@ export default function ChemicalPatents({patentSearch,typeC}) {
   useEffect(() => {
     setData(patentSearch)
    // console.log(patentSearch);
+  // console.log('rpp,page,p*rpp,size',rowsPerPage,page,page*rowsPerPage,_.size(rows))
+   // console.log('min',rowsPerPage - Math.min(rowsPerPage, _.size(rows) - page * rowsPerPage))
+
   },[patentSearch])
 
   const handleRequestSort = (event, property) => {
@@ -218,15 +193,15 @@ export default function ChemicalPatents({patentSearch,typeC}) {
   };
 
   const handleChangeRowsPerPage = (event) => {
+    //console.log(event.target.value)
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
 
-
+ };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, _.size(rows) - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -246,11 +221,12 @@ export default function ChemicalPatents({patentSearch,typeC}) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={_.size(rows)}
             />
             <TableBody>
-              {_.chain(rows)
-               .sortBy(orderBy)
+              { _.chain(rows)
+               .orderBy([orderBy],[order])
+               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
